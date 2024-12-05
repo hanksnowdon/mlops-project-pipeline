@@ -1,4 +1,6 @@
 # Databricks notebook source
+import pandas as pd
+
 df_spark = spark.read.table("hive_metastore.default.final_depression_dataset")
 df = df_spark.toPandas()
 print("Raw data shape:", df.shape)
@@ -37,8 +39,7 @@ if 'CGPA' in df.columns:
 # Identify numeric and categorical columns
 numeric_cols = ['Age', 'Work/Study Hours']
  
-categorical_cols = ['Gender', 'City', 'Working Professional or Student', 'Profession', 
-                    'Academic Pressure', 'Study Satisfaction', 'Sleep Duration', 
+categorical_cols = ['Gender', 'City', 'Working Professional or Student', 'Profession',  'Sleep Duration', 
                     'Dietary Habits', 'Degree', 'Have you ever had suicidal thoughts ?', 
                     'Financial Stress', 'Family History of Mental Illness', 'Pressure', 'Satisfaction']
 
@@ -47,9 +48,6 @@ categorical_cols = ['Gender', 'City', 'Working Professional or Student', 'Profes
 
 df['Depression'] = df['Depression'].map({'Yes':1, 'No':0})
 df_encoded = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
-
-
-
 
 # COMMAND ----------
 
